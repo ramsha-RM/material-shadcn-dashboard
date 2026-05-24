@@ -1,0 +1,38 @@
+.app {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.content-container {
+  flex: 1;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin-left: 72px;
+    transition: margin-left 220ms ease;
+  }
+
+  .sidebar:not(.collapsed) + .main {
+    margin-left: 250px;
+  }
+
+  .navbar {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .main-page {
+    padding: 12px !important;
+  }
+}

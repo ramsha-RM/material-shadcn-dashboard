@@ -1,0 +1,181 @@
+.sidebar {
+  width: 250px;
+  min-width: 250px;
+  height: 100vh;
+  background-color: #ffffff;
+  padding: 12px 12px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #eef2f7;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 12px 12px;
+  margin-bottom: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #111827;
+}
+
+.arrow {
+  font-size: 18px;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+hr {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+  margin-bottom: 8px;
+}
+
+.sidebar-content {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-content a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #374151;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-content a:hover {
+  background-color: #f3f4f6;
+}
+
+.sidebar-content a.active {
+  background-color: #16a249;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.sidebar-content a svg {
+  font-size: 18px;
+}
+
+.sidebar-content a span {
+  font-size: 0.95rem;
+}
+
+.sidebar {
+  overflow: hidden;
+  transition: width 220ms ease, padding 220ms ease, min-width 220ms ease;
+}
+
+.arrow {
+  transition: transform 200ms ease;
+}
+
+.sidebar-content a span {
+  transition: opacity 180ms ease, margin 180ms ease, width 180ms ease;
+  white-space: nowrap;
+}
+
+.sidebar.collapsed {
+  width: 72px;
+  min-width: 72px;
+  padding: 12px 8px;
+}
+
+.sidebar.collapsed .heading {
+  align-items: center;
+}
+
+.sidebar.collapsed .title {
+  display: none;
+  opacity: 0;
+}
+
+.sidebar.collapsed .arrow {
+  transform: rotate(180deg);
+}
+
+.sidebar.collapsed .sidebar-content {
+  margin-top: 8px;
+}
+
+.sidebar.collapsed .sidebar-content a {
+  justify-content: center;
+  padding: 8px;
+}
+
+.sidebar.collapsed .sidebar-content a span.label {
+  opacity: 0;
+  width: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.sidebar.collapsed .sidebar-content a svg {
+  font-size: 20px;
+}
+
+.sidebar.collapsed .sidebar-content a:focus,
+.sidebar.collapsed .sidebar-content a:hover {
+  justify-content: center;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 72px;
+    min-width: 72px;
+    z-index: 50;
+    box-shadow: 2px 0 12px rgba(15,23,42,0.06);
+    transition: width 220ms ease, min-width 220ms ease;
+  }
+ 
+  .sidebar:not(.collapsed) {
+    width: 250px;
+    min-width: 250px;
+  }
+  .sidebar.collapsed {
+    width: 72px;
+    min-width: 72px;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    animation: fadeIn 200ms ease;
+  }
+}
+
+@media (min-width: 769px) {
+  .sidebar-backdrop {
+    display: none;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
