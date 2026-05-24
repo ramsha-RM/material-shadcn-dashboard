@@ -3,13 +3,26 @@
   width: 100%;
   min-height: 100vh;
   background-color: #f8fafc;
+  overflow-x: hidden; 
 }
+
 
 .main {
   display: flex;
   flex-direction: column;
   flex: 1;
   min-width: 0;
+  transition: padding-left 220ms ease;
+}
+
+
+.sidebar.collapsed + .main {
+  padding-left: 72px;
+}
+
+
+.sidebar:not(.collapsed) + .main {
+  padding-left: 250px;
 }
 
 .content-container {
@@ -17,14 +30,14 @@
   width: 100%;
 }
 
-@media (max-width: 768px) {
-  .main {
-    margin-left: 72px;
-    transition: margin-left 220ms ease;
-  }
 
+@media (max-width: 768px) {
+  .main,
+  .sidebar.collapsed + .main,
   .sidebar:not(.collapsed) + .main {
-    margin-left: 250px;
+   
+    margin-left: 0 !important;
+    padding-left: 0 !important;
   }
 
   .navbar {
@@ -33,6 +46,6 @@
   }
 
   .main-page {
-    padding: 12px !important;
+    padding: 12px !important; 
   }
 }

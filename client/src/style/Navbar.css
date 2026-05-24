@@ -42,6 +42,11 @@
   font-size: 20px;
   cursor: pointer;
   color: #4b5563;
+  display: none;
+}
+
+.account-icon.mobile-menu-icon {
+  display: inline-flex;
 }
 
 .account {
@@ -126,6 +131,11 @@
 }
 
 @media (max-width: 768px) {
+  .account-icon.mobile-menu-icon {
+    display: inline-flex;
+    font-size: 24px;
+  }
+
   .navbar {
     padding: 12px 12px;
     gap: 8px;

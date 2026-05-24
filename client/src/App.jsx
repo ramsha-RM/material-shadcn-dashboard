@@ -10,7 +10,8 @@ const ContactsPage = () => <div style={{ padding: "20px" }}><h2>Contacts Panel</
 const CompaniesPage = () => <div style={{ padding: "20px" }}><h2>Companies Directory</h2></div>;
 
 const App = () => {
-  const [isCollapsed, setIsCollapsed] = useState(true); 
+  const [isCollapsed, setIsCollapsed] = useState(window.innerWidth <= 768);
+  const openSidebar = () => setIsCollapsed(false);
 
   return (
     <div className="app">
@@ -19,7 +20,7 @@ const App = () => {
 
    
       <div className={`main ${isCollapsed ? "collapsed-layout" : "expanded-layout"}`}>
-        <Navbar />
+        <Navbar onMenuClick={openSidebar} />
         
         <div className="content-container">
           <Routes>
