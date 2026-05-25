@@ -276,7 +276,6 @@
   margin-top: 0;
 }
 
-/* Tasks styling */
 .tasks-list {
   gap: 12px;
 }
@@ -314,13 +313,13 @@
 .task-checkbox:checked::after {
   content: "";
   position: absolute;
-  left: 4px;
-  top: 1px;
+  left: 50%;
+  top: 50%;
   width: 6px;
   height: 10px;
   border: solid #fff;
   border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+  transform: translate(-50%, -55%) rotate(45deg);
 }
 
 .task-content {
@@ -454,4 +453,90 @@
 .native-svg-dot:hover {
   r: 6;
   stroke-width: 2.5px;
+}
+
+.chart-tooltip {
+  position: fixed;
+  background: rgba(31, 41, 55, 0.95); /* Dark layout template match */
+  color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -100%);
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: tooltipFadeIn 0.15s ease-out;
+}
+
+
+.chart-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid rgba(31, 41, 55, 0.95);
+}
+
+.tooltip-month {
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.tooltip-revenue {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #d1d5db;
+  font-weight: 500;
+}
+
+
+.tooltip-marker {
+  width: 8px;
+  height: 8px;
+  background-color: #34d399;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.trend-chart-card path[stroke="#16a34a"] {
+  stroke-width: 2px !important;
+}
+
+.native-svg-dot {
+  r: 4;
+  fill: #ffffff;
+  stroke: #16a34a;
+  stroke-width: 2px;
+  cursor: pointer;
+  transition: r 0.15s ease, stroke-width 0.15s ease, fill 0.15s ease;
+}
+
+.native-svg-dot:hover {
+  r: 6;
+  stroke-width: 2.5px;
+  fill: #16a34a; 
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -95%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -100%);
+  }
 }

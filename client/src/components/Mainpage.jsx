@@ -6,8 +6,11 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import { BsCurrencyDollar } from "react-icons/bs";
 
 const Mainpage = () => {
-  const [revenueData] = useState([50, 80, 65, 180, 140, 220]);
+  const [revenueData] = useState([185, 198, 192, 222, 208, 230]); // Sync with image trend values
+  const [hoveredPoint, setHoveredPoint] = useState(null);
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
   const chartWidth = 1000;
   const chartHeight = 300;
   const maxDataValue = 250;
@@ -15,7 +18,7 @@ const Mainpage = () => {
   const points = revenueData.map((val, index) => {
     const x = (index / (revenueData.length - 1)) * chartWidth;
     const y = chartHeight - (val / maxDataValue) * chartHeight;
-    return { x, y, value: val };
+    return { x, y, value: val, month: monthNames[index] };
   });
 
   let pathString = `M ${points[0].x} ${points[0].y}`;
@@ -86,7 +89,7 @@ const Mainpage = () => {
       </div>
 
       <div className="trend-chart-card">
-        <h2 className="revenue-trend-title">Revenue Trend (Live Sync)</h2>
+        <h2 className="revenue-trend-title">Revenue Trend</h2>
         <div className="trend-chart-wrapper">
           <div className="chart-labels">
             <span>$250k</span>
@@ -114,7 +117,7 @@ const Mainpage = () => {
                     x2="0"
                     y2="1"
                   >
-                    <stop offset="0%" stopColor="#16a34a" stopOpacity="0.25" />
+                    <stop offset="0%" stopColor="#16a34a" stopOpacity="0.15" />
                     <stop offset="100%" stopColor="#16a34a" stopOpacity="0.0" />
                   </linearGradient>
                 </defs>
@@ -128,7 +131,7 @@ const Mainpage = () => {
                   d={pathString}
                   fill="none"
                   stroke="#16a34a"
-                  strokeWidth="4"
+                  strokeWidth="2"
                   strokeLinecap="round"
                   className="smooth-transition"
                 />
@@ -138,11 +141,19 @@ const Mainpage = () => {
                     key={i}
                     cx={pt.x}
                     cy={pt.y}
-                    r="6"
+                    r="4"
                     className="native-svg-dot smooth-transition"
-                  >
-                    <title>{`$${pt.value}k`}</title>
-                  </circle>
+                    onMouseEnter={(e) => {
+                      const svg = e.target.closest("svg");
+                      const rect = svg.getBoundingClientRect();
+                      setHoveredPoint(pt); 
+                      setTooltipPos({
+                        x: rect.left + (pt.x / chartWidth) * rect.width,
+                        y: rect.top + (pt.y / chartHeight) * rect.height - 12,
+                      });
+                    }}
+                    onMouseLeave={() => setHoveredPoint(null)}
+                  />
                 ))}
               </svg>
             </div>
@@ -158,6 +169,22 @@ const Mainpage = () => {
           </div>
         </div>
       </div>
+
+      {hoveredPoint && (
+        <div
+          className="chart-tooltip"
+          style={{
+            left: `${tooltipPos.x}px`,
+            top: `${tooltipPos.y}px`,
+          }}
+        >
+          <div className="tooltip-month">{hoveredPoint.month}</div>
+          <div className="tooltip-revenue">
+            <span className="tooltip-marker" />
+            Revenue: ${hoveredPoint.value}k
+          </div>
+        </div>
+      )}
 
       <div className="dashboard-bottom-grid">
         <div className="bottom-panel recent-activity-panel">
