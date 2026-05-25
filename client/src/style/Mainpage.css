@@ -79,7 +79,7 @@
   color: #a3a3a3;
   font-weight: 600;
 }
-.trend-chart-card{
+.trend-chart-card {
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 18px;
@@ -108,7 +108,7 @@
   font-weight: 400;
   width: 35px;
   text-align: right;
-  padding-bottom: 28px; 
+  padding-bottom: 28px;
 }
 
 .chart-right-block {
@@ -130,9 +130,12 @@
 .chart-grid {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(226, 232, 240, 0.9) 1px, transparent 1px),
+  background-image:
+    linear-gradient(rgba(226, 232, 240, 0.9) 1px, transparent 1px),
     linear-gradient(90deg, rgba(226, 232, 240, 0.9) 1px, transparent 1px);
-  background-size: 100% 52px, 20% 100%;
+  background-size:
+    100% 52px,
+    20% 100%;
 }
 
 .chart-svg {
@@ -144,22 +147,40 @@
 
 .chart-point {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: #ffffff;
-  border: 2px solid #16a34a;
+  border: 1px solid #16a34a;
   transform: translate(-50%, -50%);
   z-index: 3;
-  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.14);
+  box-shadow: 0 4px 8px rgba(22, 163, 74, 0.08);
 }
 
-.chart-point.point-1 { left: 0%; bottom: 54%; }
-.chart-point.point-2 { left: 25%; bottom: 58%; }
-.chart-point.point-3 { left: 45%; bottom: 56%; }
-.chart-point.point-4 { left: 65%; bottom: 70%; }
-.chart-point.point-5 { left: 83%; bottom: 65%; }
-.chart-point.point-6 { left: 100%; bottom: 74%; }
+.chart-point.point-1 {
+  left: 0%;
+  bottom: 54%;
+}
+.chart-point.point-2 {
+  left: 25%;
+  bottom: 58%;
+}
+.chart-point.point-3 {
+  left: 45%;
+  bottom: 56%;
+}
+.chart-point.point-4 {
+  left: 65%;
+  bottom: 70%;
+}
+.chart-point.point-5 {
+  left: 83%;
+  bottom: 65%;
+}
+.chart-point.point-6 {
+  left: 100%;
+  bottom: 74%;
+}
 
 .chart-axis {
   display: flex;
@@ -173,8 +194,12 @@
   text-align: center;
   flex: 1;
 }
-.chart-axis span:first-child { text-align: left; }
-.chart-axis span:last-child { text-align: right; }
+.chart-axis span:first-child {
+  text-align: left;
+}
+.chart-axis span:last-child {
+  text-align: right;
+}
 
 .dashboard-bottom-grid {
   display: grid;
@@ -198,7 +223,6 @@
   margin-bottom: 18px;
 }
 
-
 .activity-list {
   display: flex;
   flex-direction: column;
@@ -214,7 +238,9 @@
   transition: background 0.15s ease;
 }
 
-.activity-item:hover { background: #f8fafc; }
+.activity-item:hover {
+  background: #f8fafc;
+}
 
 .activity-indicator {
   width: 10px;
@@ -251,7 +277,9 @@
 }
 
 /* Tasks styling */
-.tasks-list { gap: 12px; }
+.tasks-list {
+  gap: 12px;
+}
 
 .task-item {
   display: flex;
@@ -261,7 +289,9 @@
   border-radius: 8px;
   transition: background 0.12s ease;
 }
-.task-item:hover { background: #f8fafc; }
+.task-item:hover {
+  background: #f8fafc;
+}
 
 .task-checkbox {
   -webkit-appearance: none;
@@ -361,10 +391,17 @@
     height: 260px;
     min-height: 180px;
   }
+  .chart-point {
+    width: 5px;
+    height: 5px;
+    border-width: 1px;
+  }
   .trend-chart-wrapper {
     flex-direction: column;
   }
-  .chart-labels { display: none; }
+  .chart-labels {
+    display: none;
+  }
   .dashboard-bottom-grid {
     grid-template-columns: 1fr;
   }
@@ -374,7 +411,47 @@
   .stats-cards {
     grid-template-columns: 1fr;
   }
-  .card-value { font-size: 18px; }
-  .card { padding: 10px; }
-  .trend-chart { height: 220px; min-height: 160px; }
+  .card-value {
+    font-size: 18px;
+  }
+  .card {
+    padding: 10px;
+  }
+  .trend-chart {
+    height: 220px;
+    min-height: 160px;
+  }
+  .chart-point {
+    width: 4px;
+    height: 4px;
+    border-width: 1px;
+  }
+}
+
+.chart-svg .chart-line {
+  stroke-width: 0.8;
+  stroke-linecap: round;
+}
+.smooth-transition {
+  transition:
+    d 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    cx 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    cy 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.trend-chart-card path[stroke="#16a34a"] {
+  stroke-width: 2px !important;
+}
+
+.native-svg-dot {
+  r: 4;
+  fill: #ffffff;
+  stroke: #16a34a;
+  stroke-width: 2px;
+  cursor: pointer;
+}
+
+.native-svg-dot:hover {
+  r: 6;
+  stroke-width: 2.5px;
 }

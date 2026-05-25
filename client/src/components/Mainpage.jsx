@@ -1,40 +1,38 @@
+import { useState } from "react";
 import "../style/Mainpage.css";
 import { LuUsers } from "react-icons/lu";
 import { FaBuilding } from "react-icons/fa";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { BsCurrencyDollar } from "react-icons/bs";
 
-const stacks = [
-  {
-    title: "Total Contacts",
-    icon: <LuUsers />,
-    value: "1,234",
-    percentage: "+12% from last month",
-  },
-  {
-    title: "Companies",
-    icon: <FaBuilding />,
-    value: "456",
-    percentage: "+8% from last month",
-  },
-  {
-    title: "Active Deals",
-    icon: <FaArrowTrendUp />,
-    value: "89",
-    percentage: "+23% from last month",
-  },
-  {
-    title: "Revenue",
-    icon: <BsCurrencyDollar />,
-    value: "$234,567",
-    percentage: "+18% from last month",
-  },
-];
-
 const Mainpage = () => {
+  const [revenueData] = useState([50, 80, 65, 180, 140, 220]);
+
+  const chartWidth = 1000;
+  const chartHeight = 300;
+  const maxDataValue = 250;
+
+  const points = revenueData.map((val, index) => {
+    const x = (index / (revenueData.length - 1)) * chartWidth;
+    const y = chartHeight - (val / maxDataValue) * chartHeight;
+    return { x, y, value: val };
+  });
+
+  let pathString = `M ${points[0].x} ${points[0].y}`;
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[i];
+    const p1 = points[i + 1];
+    const cpX1 = p0.x + (p1.x - p0.x) / 2;
+    const cpY1 = p0.y;
+    const cpX2 = p0.x + (p1.x - p0.x) / 2;
+    const cpY2 = p1.y;
+    pathString += ` C ${cpX1} ${cpY1}, ${cpX2} ${cpY2}, ${p1.x} ${p1.y}`;
+  }
+
+  const areaString = `${pathString} L ${chartWidth} ${chartHeight} L 0 ${chartHeight} Z`;
+
   return (
     <div className="main-page">
-      {/* Header */}
       <div className="dashboard-header">
         <div>
           <h1 className="dashboard-title">Dashboard</h1>
@@ -44,23 +42,51 @@ const Mainpage = () => {
         </div>
       </div>
 
-      {/* Top Cards */}
       <div className="stats-cards">
-        {stacks.map((stack) => (
-          <div className="card" key={stack.title}>
-            <div className="card-top">
-              <span className="card-title">{stack.title}</span>
-              <div className="card-icon">{stack.icon}</div>
+        <div className="card">
+          <div className="card-top">
+            <span className="card-title">Total Contacts</span>
+            <div className="card-icon">
+              <LuUsers />
             </div>
-            <div className="card-value">{stack.value}</div>
-            <div className="card-percentage">{stack.percentage}</div>
           </div>
-        ))}
+          <div className="card-value">1,234</div>
+          <div className="card-percentage">+12% from last month</div>
+        </div>
+        <div className="card">
+          <div className="card-top">
+            <span className="card-title">Companies</span>
+            <div className="card-icon">
+              <FaBuilding />
+            </div>
+          </div>
+          <div className="card-value">456</div>
+          <div className="card-percentage">+8% from last month</div>
+        </div>
+        <div className="card">
+          <div className="card-top">
+            <span className="card-title">Active Deals</span>
+            <div className="card-icon">
+              <FaArrowTrendUp />
+            </div>
+          </div>
+          <div className="card-value">89</div>
+          <div className="card-percentage">+23% from last month</div>
+        </div>
+        <div className="card">
+          <div className="card-top">
+            <span className="card-title">Revenue (Current Month)</span>
+            <div className="card-icon">
+              <BsCurrencyDollar />
+            </div>
+          </div>
+          <div className="card-value">${revenueData[5]}k</div>
+          <div className="card-percentage">+18% from last month</div>
+        </div>
       </div>
 
-      {/* Chart Section */}
       <div className="trend-chart-card">
-        <h2 className="revenue-trend-title">Revenue Trend</h2>
+        <h2 className="revenue-trend-title">Revenue Trend (Live Sync)</h2>
         <div className="trend-chart-wrapper">
           <div className="chart-labels">
             <span>$250k</span>
@@ -77,7 +103,7 @@ const Mainpage = () => {
 
               <svg
                 className="chart-svg"
-                viewBox="0 0 100 100"
+                viewBox="0 0 1000 300"
                 preserveAspectRatio="none"
               >
                 <defs>
@@ -88,31 +114,37 @@ const Mainpage = () => {
                     x2="0"
                     y2="1"
                   >
-                    <stop offset="0%" stopColor="#16a34a" stopOpacity="0.15" />
+                    <stop offset="0%" stopColor="#16a34a" stopOpacity="0.25" />
                     <stop offset="100%" stopColor="#16a34a" stopOpacity="0.0" />
                   </linearGradient>
                 </defs>
 
                 <path
-                  d="M 0 46 Q 20 42 40 43 T 80 30 T 100 26 L 100 100 L 0 100 Z"
+                  d={areaString}
                   fill="url(#chartGradient)"
+                  className="smooth-transition"
                 />
-
                 <path
-                  d="M 0 46 Q 20 42 40 43 T 80 30 T 100 26 "
+                  d={pathString}
                   fill="none"
                   stroke="#16a34a"
-                  strokeWidth="1"
+                  strokeWidth="4"
                   strokeLinecap="round"
+                  className="smooth-transition"
                 />
-              </svg>
 
-              <div className="chart-point point-1" />
-              <div className="chart-point point-2" />
-              <div className="chart-point point-3" />
-              <div className="chart-point point-4" />
-              <div className="chart-point point-5" />
-              <div className="chart-point point-6" />
+                {points.map((pt, i) => (
+                  <circle
+                    key={i}
+                    cx={pt.x}
+                    cy={pt.y}
+                    r="6"
+                    className="native-svg-dot smooth-transition"
+                  >
+                    <title>{`$${pt.value}k`}</title>
+                  </circle>
+                ))}
+              </svg>
             </div>
 
             <div className="chart-axis">

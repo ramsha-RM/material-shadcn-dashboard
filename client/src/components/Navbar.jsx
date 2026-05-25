@@ -4,7 +4,8 @@ import { IoIosSearch } from "react-icons/io";
 import { FiMenu } from "react-icons/fi";
 import { LuUser } from "react-icons/lu";
 import { IoIosArrowDown } from "react-icons/io";
-const Navbar = ({ onMenuClick }) => {
+
+const Navbar = ({ isCollapsed, setIsCollapsed }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const accountRef = useRef(null);
 
@@ -29,18 +30,18 @@ const Navbar = ({ onMenuClick }) => {
         <div className="account-box" ref={accountRef}>
           <FiMenu
             className="account-icon mobile-menu-icon"
-            onClick={onMenuClick}
+            onClick={() => setIsCollapsed(!isCollapsed)}
             role="button"
             tabIndex={0}
-            aria-label="Open sidebar menu"
+            aria-label="Toggle sidebar menu"
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
-                onMenuClick();
+                setIsCollapsed(!isCollapsed);
               }
             }}
           />
 
-          <div className="account">
+          <div className="account" onClick={() => setMenuOpen((open) => !open)} style={{ cursor: 'pointer' }}>
             <div className="user">
               <LuUser className="user-icon" />
             </div>
@@ -49,12 +50,12 @@ const Navbar = ({ onMenuClick }) => {
 
             <IoIosArrowDown
               className="arrow-icon"
-              onClick={() => setMenuOpen((open) => !open)}
               role="button"
               aria-expanded={menuOpen}
               aria-label={menuOpen ? "Close account menu" : "Open account menu"}
               tabIndex={0}
               onKeyDown={(e) => {
+                e.stopPropagation(); // Prevents double toggling when pressing enter on the arrow specifically
                 if (e.key === "Enter" || e.key === " ") {
                   setMenuOpen((open) => !open);
                 }

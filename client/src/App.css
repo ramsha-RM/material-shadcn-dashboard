@@ -12,9 +12,14 @@
   flex-direction: column;
   flex: 1;
   min-width: 0;
+  min-height: 100vh;
   transition: padding-left 220ms ease;
 }
 
+.content-container {
+  flex: 1;
+  width: 100%;
+}
 
 .sidebar.collapsed + .main {
   padding-left: 72px;
@@ -29,7 +34,17 @@
   flex: 1;
   width: 100%;
 }
-
+.bottom {
+  width: 100%;
+  padding: 18px 24px;
+  background: #ffffff;
+  border-top: 1px solid #eef2f7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; 
+  position: relative;
+}
 
 @media (max-width: 768px) {
   .main,
